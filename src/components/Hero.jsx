@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { StaggeredFade } from '../animations/StaggeredEffect';
 import '../styles/style.css';
 import gsap from 'gsap';
+import { Link } from 'react-router-dom';
 
 
 
@@ -132,7 +133,7 @@ function Hero() {
   
 
   return (
-    <div className='md:w-full relative'>
+    <div className='md:w-[100vw] relative overflow-x-hidden'>
 
     <div className='absolute top-0 left-0 w-full h-screen flex justify-center items-center'>
       <svg 
@@ -186,7 +187,7 @@ function Hero() {
 
         {/* Centered Text */}
         <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full flex flex-col items-center md:space-y-10 space-y-5 text-center'>
-          <StaggeredFade text="Your Next Journey,Optimized" className='select-none tracking-wider w-full text-white font-sans text-center md:text-8xl font-extrabold text-3xl' />
+          <StaggeredFade text="Your Next Journey,Optimized" className='select-none tracking-wider w-full text-white font-sans text-center md:text-6xl md:px-16 font-extrabold text-3xl' />
           
           <p className='text-white/75 select-none hidden md:block md:text-xl text-xs md:px-0 px-10'>
             Build, personalize, and optimize your itineraries with our free AI trip planner. Designed for vacations, workations, and everyday adventures.
@@ -194,9 +195,11 @@ function Hero() {
           <p className='text-white/75 select-none md:hidden block md:text-xl text-xs md:px-0 px-10'>
             Build, personalize, and optimize your itineraries with our free AI trip planner.
           </p>
-          <button className="cursor-pointer font-semibold text-white rounded-2xl md:border-0 md:px-10 md:py-3 px-6 py-3 md:text-xl text-xs bg-blue-500 hover:bg-blue-400 duration-200">
+          <Link
+          to={'/chat'} 
+          className="cursor-pointer font-semibold text-white rounded-2xl md:border-0 md:px-10 md:py-3 px-6 py-3 md:text-xl text-xs bg-blue-500 hover:bg-blue-400 duration-200">
             Create a New Trip
-          </button>
+          </Link>
         </div>
 
       </div>
