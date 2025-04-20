@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import Loader from "./Loader.jsx";
-import { tr } from "framer-motion/client";
 
 const questions = [
+  "From where are you traveling?",
   "Where would you like to go?",
   "How many days do you plan to stay?",
   "What’s your budget?",
@@ -14,10 +14,10 @@ const questions = [
 ];
 
 const questionOptions = {
-  2: ["1-2 days", "3-4 days", "5-7 days", "7+ days"],
-  3: ["3,000-5,000", "5,000-10,000", "10,000 15,000", "15,000-20,000"],
-  4: ["Adventure", "Relaxation", "Cultural", "Nightlife"],
-  5: ["Solo", "Couple", "Family", "Friends"],
+  3: ["1-2 days", "3-4 days", "5-7 days", "7+ days"],
+  4: ["3,000-5,000", "5,000-10,000", "10,000 15,000", "15,000-20,000"],
+  5: ["Adventure", "Relaxation", "Cultural", "Nightlife"],
+  6: ["Solo", "Couple", "Family", "Friends"],
 };
 
 const ChatBot = () => {
@@ -33,20 +33,54 @@ const ChatBot = () => {
   ]);
 
 
+  
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
-    if (messages.length > 12) {
+    if (messages.length > 14) {
       console.log("Reached message limit");
       console.log("Current Question Index:", currentQuestionIndex);
       console.log("Messages:", messages);
       inputref.current.disabled = true;
       setTimeout(() => {
         setLoading(true);
+        fetchItinerary();
       }, 2000);
     }
   }, [messages]);
+
+
+
+      const fetchItinerary = async () => {
+        const prompt = createPromptFromMessages(messages);
+  
+        try {
+          const res = await fetch('http://localhost:3000/api/GenerateItinerary', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              tripDetails: { prompt },
+            }),
+          });
+  
+          const data = await res.json();
+  
+          const itinerary =
+            data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received';
+  
+          console.log('Response:', itinerary);
+
+          // Optional: Show itinerary in UI or navigate to another page
+        } catch (err) {
+          console.error('Error calling Gemini API:', err);
+        }
+      };
+
+  
+
 
   const handleOptionSelect = (option) => {
     setMessages((prev) => [...prev, { text: option, from: "user" }]);
@@ -62,6 +96,131 @@ const ChatBot = () => {
       }
     }, 1000);
   };
+
+
+  const createPromptFromMessages = (messages = []) => {
+    const getAnswer = (question) => {
+      const index = messages.findIndex(
+        (msg) =>
+          msg.from === 'bot' &&
+          msg.text &&
+          msg.text.toLowerCase().includes(question.toLowerCase())
+      );
+      if (index !== -1 && messages[index + 1] && messages[index + 1].from === 'user') {
+        return messages[index + 1].text;
+      }
+      return '';
+    };
+  
+    const from = getAnswer('from where') || 'Udaipur';
+    const to = getAnswer('where would you like to go') || 'Jaipur';
+    const days = getAnswer('how many days') || '2';
+    const budget = getAnswer('budget') || '5000–10000';
+    const activity = getAnswer('activities') || 'relaxation';
+    const people = getAnswer('solo or with others') || 'couple';
+    const hotelTransport = getAnswer('hotel or transport preferences') || 'no';
+  
+    return `
+  You are a travel planner bot.
+  
+  Plan a ${days}-day trip for a ${people} from ${from} to ${to} with a budget of ₹${budget}.
+  They prefer ${activity} and have ${hotelTransport === 'no' ? 'no specific' : hotelTransport} hotel or transport preferences.
+  
+  ✅ Format your response in the following JSON structure:
+  
+  {
+    "title": "Trip Title",
+    "from": "Udaipur",
+    "to": "Jaipur",
+    "budget": "₹5,000–₹10,000",
+    "days": [
+      {
+        "day": "Day 1",
+        "activities": [
+          {
+            "time": "8:00 AM",
+            "activity": "Start your day with a relaxing breakfast in a cozy atmosphere."
+          },
+          {
+            "time": "9:30 AM",
+            "activity": "Enjoy a cultural experience with live theatrical shows, perfect for relaxation."
+          },
+          {
+            "time": "12:00 PM",
+            "activity": "Indulge in a relaxing spa treatment to rejuvenate your body and mind."
+          },
+          {
+            "time": "3:00 PM",
+            "activity": "Participate in a calming yoga session to enhance relaxation."
+          },
+          {
+            "time": "6:00 PM",
+            "activity": "Savor delicious kababs in a relaxed dining setting."
+          },
+          {
+            "time": "8:00 PM",
+            "activity": "Enjoy a peaceful evening stroll in a scenic park."
+          },
+          {
+            "time": "10:00 PM",
+            "activity": "End your day by checking into a comfortable hotel."
+          }
+        ]
+      },
+      {
+        "day": "Day 2",
+        "activities": [
+          {
+            "time": "8:00 AM",
+            "activity": "Enjoy a hearty breakfast to start your day."
+          },
+          {
+            "time": "10:00 AM",
+            "activity": "Relax and unwind while enjoying a round of golf."
+          },
+          {
+            "time": "1:00 PM",
+            "activity": "Enjoy a delicious and relaxing meal with family."
+          },
+          {
+            "time": "3:00 PM",
+            "activity": "Explore a vibrant area with shops and cafes."
+          },
+          {
+            "time": "6:00 PM",
+            "activity": "Enjoy a relaxed dinner with a variety of grilled dishes."
+          },
+          {
+            "time": "8:00 PM",
+            "activity": "Take a leisurely walk in a well-lit and scenic area."
+          },
+          {
+            "time": "10:00 PM",
+            "activity": "Settle down for the night in a cozy hotel."
+          }
+        ]
+      }
+    ],
+    "total_per_person": {
+      "min": "₹5,000",
+      "max": "₹10,000"
+    },
+    "tips": [
+      "Book in advance for lower fares",
+      "Use metro to save money",
+      "Check happy hour for nightlife deals"
+    ]
+  }
+  
+  📌 Make sure all content is within the specified budget and formatted properly.
+  `;
+  };
+  
+
+  
+  
+  
+  
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -121,21 +280,6 @@ const ChatBot = () => {
         ease: "power4.out",
       }
     );
-
-    gsap.fromTo(
-      ".user",
-      {
-        xPercent: 100,
-        opacity: 0,
-        ease: "power4.out",
-      },
-      {
-        xPercent: 0,
-        opacity: 1,
-        duration: 0.75,
-        ease: "power4.out",
-      }
-    );
   }, []);
 
   useEffect(() => {
@@ -161,7 +305,7 @@ const ChatBot = () => {
     <div className="w-full h-screen flex md:flex-row flex-col items-center justify-center bg-[#A6C7D2] md:p-0 p-20 overflow-x-hidden">
 
       <div className="leftPart md:w-1/2 w-full max-w-xl mx-auto border rounded-2xl overflow-hidden shadow-lg flex flex-col h-[600px] overflow-x-hidden">
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 bg-gray-50">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 bg-[url('/chatbotbg.jpg')] bg-cover bg-center bg-no-repeat">
           {messages.map((msg, index) => (
             <div
               key={index}
@@ -172,7 +316,7 @@ const ChatBot = () => {
               <div
                 className={`chat-message msg-${index} px-4 py-2 rounded-2xl max-w-[70%] ${
                   msg.from === "user"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-[#0f55c6] text-white"
                     : "bg-gray-200 text-gray-800"
                 }`}
               >
