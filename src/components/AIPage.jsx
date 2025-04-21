@@ -315,7 +315,7 @@ function AIPage() {
               </div>
             </div>
             <div className=" space-y-2">
-              <img className="w-[30%]" src="/public/star.jpg" />
+              <img className="w-[30%]" src="/star.jpg" />
               <p className=" text-[18px] font-medium">
                 Travl AI offers diverse planning options in a
                 user-friendly interface. Simplifies travel planning for

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import Loader from "./Loader.jsx";
+import { useNavigate } from "react-router-dom";
 
 const questions = [
   "From where are you traveling?",
@@ -23,6 +24,8 @@ const questionOptions = {
 const ChatBot = () => {
   const inputref = useRef(null);
   const messagesEndRef = useRef(null);
+  const navigate = useNavigate();
+
 
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
@@ -72,6 +75,7 @@ const ChatBot = () => {
             data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received';
   
           console.log('Response:', itinerary);
+          navigate('/trip-details' , { state: {tripDetails :  itinerary } });
 
           // Optional: Show itinerary in UI or navigate to another page
         } catch (err) {
