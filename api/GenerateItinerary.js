@@ -3,6 +3,8 @@
 export default async function handler(req, res) {
     if (req.method === 'POST') {
       const { tripDetails } = req.body;
+      console.log('Received trip details:', tripDetails);
+      
   
       try {
         const geminiResponse = await fetch(

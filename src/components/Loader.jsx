@@ -1,4 +1,4 @@
-import { RotatingLines } from "react-loader-spinner";
+import { RotatingLines , Oval} from "react-loader-spinner";
 
 function Loader() {
   return (
@@ -12,4 +12,19 @@ function Loader() {
   )
 }
 
+function DownloadingLoader() {
+  return (
+    <Oval
+    visible={true}
+    height="25"
+    width="25"
+    color="#2196F3"
+    ariaLabel="oval-loading"
+    wrapperStyle={{}}
+    wrapperClass=""
+    strokeWidth={4}
+  />
+  )
+}
+export {DownloadingLoader};
 export default Loader;

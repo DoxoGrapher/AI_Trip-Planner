@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import Loader from "./Loader.jsx";
 import { useNavigate } from "react-router-dom";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const questions = [
   "From where are you traveling?",
@@ -22,6 +24,8 @@ const questionOptions = {
 };
 
 const ChatBot = () => {
+
+
   const inputref = useRef(null);
   const messagesEndRef = useRef(null);
   const navigate = useNavigate();
@@ -40,6 +44,7 @@ const ChatBot = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    
 
     if (messages.length > 14) {
       console.log("Reached message limit");
@@ -54,12 +59,11 @@ const ChatBot = () => {
   }, [messages]);
 
 
-
       const fetchItinerary = async () => {
         const prompt = createPromptFromMessages(messages);
   
         try {
-          const res = await fetch('http://localhost:3000/api/GenerateItinerary', {
+          const res = await fetch('https://ai-trip-planner-mllnr3sqj-anshulgadia04s-projects.vercel.app/api/GenerateItinerary', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -219,15 +223,16 @@ const ChatBot = () => {
   📌 Make sure all content is within the specified budget and formatted properly.
   `;
   };
-  
-
-  
-  
-  
-  
+ 
 
   const handleSend = (e) => {
     e.preventDefault();
+    inputref.current.disabled = true;
+    setTimeout(()=>{
+      inputref.current.disabled = false;
+    },1000)
+
+
 
     if (!input.trim()) {
       alert("Please enter a valid input");
