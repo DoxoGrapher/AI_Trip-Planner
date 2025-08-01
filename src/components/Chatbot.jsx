@@ -311,9 +311,15 @@ const ChatBot = () => {
   }, [messages]);
 
   return (
-    <div className="w-full h-screen flex md:flex-row flex-col items-center justify-center bg-[#A6C7D2] md:p-0 p-20 overflow-x-hidden">
+    <>
+      <div className="w-full h-screen flex md:flex-row flex-col items-center justify-center bg-[#A6C7D2] md:p-0 p-20 overflow-x-hidden">
+  
+      <div className="leftPart md:w-1/2 w-full max-w-xl mx-auto ">
+        
+        <button onClick={() => navigate('/')} className=" px-4 py-2 rounded-full border-2 border-blue-500 text-white hover:bg-gray-100 transition mb-2 font-bold text-xl hover:text-black"><i class="ri-arrow-left-line"></i> Back</button>
 
-      <div className="leftPart md:w-1/2 w-full max-w-xl mx-auto border rounded-2xl overflow-hidden shadow-lg flex flex-col h-[600px] overflow-x-hidden">
+
+        <div className="border rounded-2xl overflow-hidden shadow-lg flex flex-col h-[600px] overflow-x-hidden">
         <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 bg-[url('/chatbotbg.jpg')] bg-cover bg-center bg-no-repeat">
           {messages.map((msg, index) => (
             <div
@@ -379,6 +385,7 @@ const ChatBot = () => {
         </div>
       </div>
 
+      </div>
 
       <div className="rightPart h-screen w-1/2 hidden md:block">
         <img
@@ -387,6 +394,7 @@ const ChatBot = () => {
         />
       </div>
     </div>
+    </>
   );
 };
 

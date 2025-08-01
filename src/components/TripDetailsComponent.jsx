@@ -76,6 +76,8 @@ const TripDetailsComponent = () => {
         Download {isGenerating ? <DownloadingLoader /> : <img src='/download.png' alt='Download' className='inline-block w-5 h-5 ml-2' />}
       </button>
 
+              <button onClick={() => navigate('/')} className=" px-4 py-2 rounded-full border-2 border-blue-500 text-white hover:bg-gray-100 transition mb-2 font-bold text-xl hover:text-black"><i class="ri-arrow-left-line"></i> Back</button>
+
       <div ref={pdfRef} className="mx-auto px-[15%] py-12 rounded-lg shadow-lg w-full bg-white">
         <h1 className="text-6xl font-semibold pt-10 mb-4">AI Trip Planner 🌴</h1>
         <p className='text-blue-500 text-lg tracking-wider mb-4'>Plan your dream trip with personalized itineraries. </p>
