@@ -8,7 +8,7 @@ function Navbar() {
 
 <nav className="absolute md:px-0 px-5  top-3 md:top-10 left-0 w-full z-50 border-gray-200">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">
-    <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+    <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
         <img src={logo} className="h-16" alt="Flowbite Logo" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Travl.AI</span>
     </a>

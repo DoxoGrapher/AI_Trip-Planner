@@ -4,6 +4,10 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
       const { tripDetails } = req.body;
       console.log('Received trip details:', tripDetails);
+      if (!process.env.VITE_GEMINI_API_KEY) {
+        console.error('Missing Gemini API key');
+        return res.status(500).json({ error: 'Missing Gemini API key' });
+      }
       
   
       try {
@@ -35,4 +39,3 @@ export default async function handler(req, res) {
       res.status(405).json({ error: 'Method Not Allowed' });
     }
   }
-  

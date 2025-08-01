@@ -11,7 +11,7 @@ const ShowCaseImages = () => {
     
         const tl = gsap.timeline({defaults: {duration: 0.1 , ease: "power4.out"} , 
         scrollTrigger: {
-          trigger: '.starting',
+          trigger: '.images',
           start: 'top top',
           scrub: 1,
         }});
@@ -32,13 +32,13 @@ const ShowCaseImages = () => {
         },"<")
     
         .to('.three' , {
-          scale: 3,
+          scale: 2,
           yPercent : -100, 
           opacity: 0,
         },"<")
     
         .to('.four' , {
-          scale: 4,
+          scale: 2.5,
         },"<")
     
         .to('.five' , {
@@ -75,8 +75,8 @@ const ShowCaseImages = () => {
           explorers.
         </p>
 
-        <div className=' relative h-[300vh] bg-blue-50'>
-            <div className='sticky h-[100vh] top-0'>
+        <div className='images relative h-[300vh] bg-blue-50'>
+            <div className='sticky h-[100vh] top-0 overflow-hidden'>
                 <div className='flex flex-col md:flex-row justify-center gap-10 items-center w-full h-full'>
                     <div className='flex flex-col  justify-center items-center space-y-10'>
                             <img className='one w-[500px] md:h-[600px] object-cover rounded-3xl' src='/p.jpg'/>

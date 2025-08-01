@@ -5,6 +5,7 @@ import { useState , useEffect , useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { tr } from "framer-motion/client";
+import {motion} from "framer-motion";
 import ShowCaseImages from "./ShowCaseImages.jsx";
 
 
@@ -187,16 +188,37 @@ function AIPage() {
               </p>
             </div>
             <div className="md:w-1/2 md:mt-0 w-3/4 m-auto">
-              <img
-                src="https://tripplanner.ai/_next/image?url=%2Fillustrations%2Fdestinations2.webp&w=256&q=75"
-                className="rightImage md:w-64 md:m-auto w-0 "
-              />
+              <motion.img
+              animate={{
+                x: [0, 10, 0], 
+                y: [0, -10, 0], 
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+              }}
+              src="https://tripplanner.ai/_next/image?url=%2Fillustrations%2Fdestinations2.webp&w=256&q=75"
+              className="rightImage md:w-64 md:m-auto w-0"
+            />
+
             </div>
           </div>
 
           <div className="md:flex md:flex-row">
             <div className="w-1/2 mt-0">
-              <img
+              <motion.img
+              animate={{
+                x: [0, -10, 0], 
+                y: [0, 10, 0], 
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+              }}
                 src="https://tripplanner.ai/_next/image?url=%2Fillustrations%2Fmap.webp&w=640&q=75"
                 className="leftImage md:w-64 md:m-auto w-0"
               />
@@ -231,6 +253,7 @@ function AIPage() {
         <div className=" md:w-1/4 md:space-y-3 w-[90%] rounded-md md:m-0 m-auto border md:border-none px-4 py-2 md:p-0 md:mb-0 mb-3">
           <div className="flex flex-row space-x-4">
             <img
+
               src="https://tripplanner.ai/_next/image?url=%2Fillustrations%2Fmap.webp&w=384&q=75"
               className="md:w-20 w-12"
             />
@@ -283,7 +306,7 @@ function AIPage() {
         </p>
 
         <div className="box md:flex md:flex-row w-[90%] m-auto justify-evenly mt-14">
-          <div className="box1 bg-white border-2 rounded-lg md:w-[30%] w-full p-6 h-64 md:mt-0">
+          <motion.div whileHover={{ y: -20 , scale : 1.1 }} transition={{ type: "spring", stiffness: 300 }}  className="box1 bg-white border-2 rounded-lg md:w-[30%] w-full p-6 h-64 md:mt-0">
             <div className="flex flex-row mb-5">
               <img
                 src="https://tripplanner.ai/_next/image?url=%2Flanding%2Fimages%2Freviews%2Fdavid_jordan.webp&w=128&q=75"
@@ -301,9 +324,9 @@ function AIPage() {
                 relieving indecision or uncertainty.
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="box2 bg-white border rounded-lg md:w-[30%] w-full p-6 md:mt-16 h-64 mt-6">
+          <motion.div whileHover={{ y: -20 , scale : 1.1 }} transition={{ type: "spring", stiffness: 300 }} className="box2 bg-white border rounded-lg md:w-[30%] w-full p-6 md:mt-16 h-64 mt-6">
             <div className="flex flex-row mb-5">
               <img
                 src="https://tripplanner.ai/_next/image?url=%2Flanding%2Fimages%2Freviews%2Ftushar.webp&w=128&q=75"
@@ -322,9 +345,9 @@ function AIPage() {
                 enthusiasts.
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="box3 bg-white border-2 rounded-lg md:w-[30%] w-full p-6 h-64 md:mt-0 mt-6">
+          <motion.div whileHover={{ y: -20 , scale : 1.1 }} transition={{ type: "spring", stiffness: 300 }} className="box3 bg-white border-2 rounded-lg md:w-[30%] w-full p-6 h-64 md:mt-0 mt-6">
             <div className="flex flex-row mb-5">
               <img
                 src="https://tripplanner.ai/_next/image?url=%2Flanding%2Fimages%2Freviews%2Fsteve_j.webp&w=128&q=75"
@@ -342,7 +365,7 @@ function AIPage() {
                 trip agendas, reducing decision fatigue.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

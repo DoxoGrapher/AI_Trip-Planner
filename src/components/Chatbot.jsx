@@ -63,7 +63,7 @@ const ChatBot = () => {
         const prompt = createPromptFromMessages(messages);
   
         try {
-          const res = await fetch('https://ai-trip-planner-mllnr3sqj-anshulgadia04s-projects.vercel.app/api/GenerateItinerary', {
+          const res = await fetch('/api/GenerateItinerary', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
