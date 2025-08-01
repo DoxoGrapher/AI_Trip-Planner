@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { DownloadingLoader } from './Loader.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const TripDetailsComponent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [tripDetails, setTripDetails] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
